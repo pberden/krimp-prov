@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <meta charset="utf-8">
+<title>Economic Contraction in the Netherlands</title>
 <style>
 .provincies {
   fill: none;
@@ -42,13 +43,13 @@ var svg = d3.select("body").append("svg")
 d3.json("data/prov.json", function(error, prov) {
   var provincies = topojson.feature(prov, prov.objects.provgeo);
 
-
+//For development purpose:
 console.log(provincies)
 
   //Set input domain for color scale
   color.domain([
-    d3.min(provincies.features, function(d) { return d.properties.AAND2013; }), 
-    d3.max(provincies.features, function(d) { return d.properties.AAND2013; })
+    d3.min(provincies.features, function(d) { return d.properties.MUT2013; }), 
+    d3.max(provincies.features, function(d) { return d.properties.MUT2013; })
   ]);
 
   svg.selectAll(".prov")
@@ -56,9 +57,9 @@ console.log(provincies)
     .enter().append("path")
       .attr("class", function(d) { return "prov " + d.id; })
       .attr("d", path)
-      .style("fill", function(d) {return (color(d.properties.AAND2013));})
+      .style("fill", function(d) {return (color(d.properties.MUT2013));})
       .append("title")
-      .text(function(d) { return d.properties.PROV_NAME + ": " + d.properties.AAND2013 + " %"; });
+      .text(function(d) { return d.properties.PROV_NAME + ": " + d.properties.MUT2013 + " %"; });
 
   svg.append("path")
       .datum(topojson.mesh(prov, prov.objects.provgeo, function(a, b) { return a !== b; }))
