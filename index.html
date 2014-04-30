@@ -31,18 +31,10 @@ var path = d3.geo.path()
                
 //Define quantize scale to sort data values into buckets of color
 var color = d3.scale.quantize()
-          .range(colorbrewer.RdBu[7]);
+          .range(colorbrewer.RdBu[9]);
 
 //Function for drawing a single map
 var drawmap = function(provincies, borders, mutation){
-    //Create variable for mutations
-    var mut = 
-    //Set input domain for color scale
-    color.domain([
-      d3.min(provincies.features, function(d) { return d.properties[mutation]; }), 
-      d3.max(provincies.features, function(d) { return d.properties[mutation]; })
-    ]);
-
     var svg = d3.select("div").append("svg")
         .attr("width", width)
         .attr("height", height);
@@ -65,9 +57,14 @@ var drawmap = function(provincies, borders, mutation){
 //Load data from json
 d3.json("data/prov.json", function(error, prov) {
     var provincies = topojson.feature(prov, prov.objects.provgeo);
+    var borders = topojson.mesh(prov, prov.objects.provgeo, function(a, b) { return a === b; });
+
 //DEBUGGINGGGGGG!!
     console.log(provincies);
-    var borders = topojson.mesh(prov, prov.objects.provgeo, function(a, b) { return a === b; });
+
+    //Set input domain for color scale
+    color.domain([-4, 4]);
+
     //Call function for each mutation
     for (var i = 0, len = mutations.length; i < len; i++) {
         console.log(mutations[i])
