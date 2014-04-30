@@ -2,6 +2,32 @@
 <meta charset="utf-8">
 <title>Economic Contraction in the Netherlands</title>
 <style>
+#wrapper {
+    width: 900px;
+    margin: 20px auto;
+    padding: 0 25px;
+    background: #FEFEF2;
+}
+#header {
+    padding:10px 25px 0 25px;
+}
+h1 {
+    border-bottom:1px #D6D6D6 solid;
+    padding-left:10px;
+}
+
+ul.legend {
+    list-style-type: none;
+    padding: 0px;
+    margin: 0px;
+}
+ul.legend li {
+    float:right;
+    padding:20px 5px 0 5px;
+}
+ul.legend li svg{
+    padding:0 2px;
+}
 .provincies {
   fill: none;
 }
@@ -35,7 +61,7 @@ var color = d3.scale.quantize()
 
 //Function for drawing a single map
 var drawmap = function(provincies, borders, mutation){
-    var svg = d3.select("div").append("svg")
+    var svg = d3.select("#viz").append("svg")
         .attr("width", width)
         .attr("height", height);
 
@@ -73,5 +99,10 @@ d3.json("data/prov.json", function(error, prov) {
 });
 
 </script>
-<div></div>
+<div id="wrapper">
+    <div id="header">
+        <h1>Economic Contraction in the Netherlands</h1>
+    </div>
+    <div id="viz"></div>
+</div>
 </body>
