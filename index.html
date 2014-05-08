@@ -113,30 +113,26 @@ var drawchart = function(data){
         .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 };
 
-//Load data from json
+//Load data from json and draw map!
 d3.json("data/prov.json", function(error, prov) {
     var provincies = topojson.feature(prov, prov.objects.provgeo);
     var borders = topojson.mesh(prov, prov.objects.provgeo, function(a, b) { return a === b; });
 
-    var temp = [];
-
     //Call function for each mutation and draw the maps
     for (var i = 0, len = mutations.length; i < len; i++) {
         drawmap(provincies, borders, mutations[i]);
-
-        provincies.features.forEach(function(d) {
-            temp.push([d.properties.PROV_NAME, mutations[i], d.properties[mutations[i]]])
-        });
-
     }
+});
 
-    //DEBUGGINGGGGGG!!
-    //console.log(provincies.features);
-    console.log(temp);
+//Load data from csv and draw chart
+d3.csv("data/cbs.csv",function(csv) {
 
-    //Add legend and chart
-    drawchart(temp)
+    data=d3.nest()
+        .key(function(d) {return d.PROV_CODE;})
+        .sortKeys(d3.ascending)
+        .entries(csv);
 
+    console.log(data);
 });
 
 </script>
